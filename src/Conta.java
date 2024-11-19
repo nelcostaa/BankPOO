@@ -9,7 +9,7 @@ public abstract class Conta extends Banco {
   private double saldo;
 
   public Conta(String nomeConta, int numeroConta, String nomeCorrentista,
-               int cpfCorrentista) {
+      int cpfCorrentista) {
     super(nomeConta);
     this.numeroConta = numeroConta;
     this.nomeCorrentista = nomeCorrentista;
@@ -18,7 +18,13 @@ public abstract class Conta extends Banco {
     this.saldo = 0.0; // Inicializando o saldo com 0
   }
 
-  public double getSaldo() { return saldo; }
+  public void setSaldo(double saldo) {
+    this.saldo = saldo;
+  }
+
+  public double getSaldo() {
+    return saldo;
+  }
 
   public void adicionarOperacao(Operacao operacao) {
     this.operacoes.add(operacao);
@@ -45,16 +51,21 @@ public abstract class Conta extends Banco {
       return;
     }
     this.saldo += qntdDinheiro;
-    Operacao deposito =
-        new Operacao(LocalDate.now(), qntdDinheiro, Tipo.DEPOSITO);
+    Operacao deposito = new Operacao(LocalDate.now(), qntdDinheiro, Tipo.DEPOSITO);
     adicionarOperacao(deposito); // Registra a operação de depósito
   }
 
-  public int getNumeroConta() { return numeroConta; }
+  public int getNumeroConta() {
+    return numeroConta;
+  }
 
-  public String getNomeCorrentista() { return nomeCorrentista; }
+  public String getNomeCorrentista() {
+    return nomeCorrentista;
+  }
 
-  public int getCpfCorrentista() { return cpfCorrentista; }
+  public int getCpfCorrentista() {
+    return cpfCorrentista;
+  }
 
   public void setNumeroConta(int numeroConta) {
     this.numeroConta = numeroConta;
