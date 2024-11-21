@@ -3,7 +3,7 @@ import java.time.LocalDate;
 public final class Corrente extends Conta implements Pix {
 
   public Corrente(String nomeConta, int numeroConta, String nomeCorrentista,
-                  int cpfCorrentista) {
+      int cpfCorrentista) {
     super(nomeConta, numeroConta, nomeCorrentista, cpfCorrentista);
   }
 
@@ -43,5 +43,10 @@ public final class Corrente extends Conta implements Pix {
     Operacao pixIn = new Operacao(LocalDate.now(), valorPix, Tipo.PIX_IN);
     this.adicionarOperacao(pixIn); // Registra a operação(pixIn);
     System.out.println("PIX recebido com sucesso!");
+  }
+
+  @Override
+  public void cadastrarCPF() {
+    getCpfCorrentista();
   }
 }
