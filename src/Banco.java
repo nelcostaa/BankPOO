@@ -1,9 +1,8 @@
 import java.util.ArrayList;
 
-public abstract class Banco {
+public class Banco {
   private ArrayList<Conta> contas;
   private String nomeConta;
-  private ArrayList<Conta> listaPix;
 
   public Banco(String nomeConta) {
     this.contas = new ArrayList<Conta>();

@@ -1,9 +1,11 @@
+import java.util.ArrayList;
 import java.time.LocalDate;
 
 public final class Corrente extends Conta implements Pix {
+  // Lista para armazenar os CPFs cadastrados no Pix
+  private static ArrayList<Integer> cpfsPix = new ArrayList<>();
 
-  public Corrente(String nomeConta, int numeroConta, String nomeCorrentista,
-      int cpfCorrentista) {
+  public Corrente(String nomeConta, int numeroConta, String nomeCorrentista, int cpfCorrentista) {
     super(nomeConta, numeroConta, nomeCorrentista, cpfCorrentista);
   }
 
@@ -15,12 +17,10 @@ public final class Corrente extends Conta implements Pix {
       return;
     }
     if (this.getSaldo() >= valorPix) { // Realiza o saque da conta origem
-      // tira o dinheiro da conta origem e registra a operação
       Operacao pixOut = new Operacao(LocalDate.now(), valorPix, Tipo.PIX_OUT);
       this.sacarDinheiro(valorPix);
       this.adicionarOperacao(pixOut);
 
-      // deposita o dinheiro na conta destino e registra a operação
       desConta.depositarDinheiro(valorPix); // Deposita na conta destino
       Operacao pixIn = new Operacao(LocalDate.now(), valorPix, Tipo.PIX_IN);
       desConta.adicionarOperacao(pixIn);
@@ -41,12 +41,27 @@ public final class Corrente extends Conta implements Pix {
 
     this.depositarDinheiro(valorPix); // Realiza o depósito da conta corrente
     Operacao pixIn = new Operacao(LocalDate.now(), valorPix, Tipo.PIX_IN);
-    this.adicionarOperacao(pixIn); // Registra a operação(pixIn);
+    this.adicionarOperacao(pixIn);
     System.out.println("PIX recebido com sucesso!");
   }
 
+  // Implementação simplificada do método cadastrarCPF
   @Override
   public void cadastrarCPF() {
-    getCpfCorrentista();
+    int cpf = this.getCpfCorrentista();
+    if (cpfsPix.contains(cpf)) {
+      System.out.println("CPF já cadastrado no Pix.");
+    } else {
+      cpfsPix.add(cpf); // Adiciona o CPF ao ArrayList
+      System.out.println("CPF cadastrado no Pix com sucesso!");
+    }
+  }
+
+  // Método para exibir todos os CPFs cadastrados no Pix
+  public static void listarCpfsPix() {
+    System.out.println("CPFs cadastrados no Pix:");
+    for (int cpf : cpfsPix) {
+      System.out.println(cpf);
+    }
   }
 }
