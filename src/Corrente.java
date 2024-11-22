@@ -11,17 +11,27 @@ public final class Corrente extends Conta implements Pix {
 
   // Implementação do método fazerPix da interface Pix
   @Override
-  public void fazerPix(Conta desConta, double valorPix) {
+  public void fazerPix(int cpfDestino, double valorPix) {
     if (valorPix <= 0) {
       System.out.println("Valor de PIX deve ser positivo.");
       return;
     }
-    if (this.getSaldo() >= valorPix) { // Realiza o saque da conta origem
+
+    // Usa o método getAccountByCpf da classe Banco
+    Conta desConta = super.getAccountByCpf(cpfDestino);
+    if (desConta == null) {
+      System.out.println("Erro: Nenhuma conta encontrada com o CPF destino.");
+      return;
+    }
+
+    if (this.getSaldo() >= valorPix) {
+      // Deduz o valor da conta origem
       Operacao pixOut = new Operacao(LocalDate.now(), valorPix, Tipo.PIX_OUT);
       this.sacarDinheiro(valorPix);
       this.adicionarOperacao(pixOut);
 
-      desConta.depositarDinheiro(valorPix); // Deposita na conta destino
+      // Adiciona o valor à conta destino
+      desConta.depositarDinheiro(valorPix);
       Operacao pixIn = new Operacao(LocalDate.now(), valorPix, Tipo.PIX_IN);
       desConta.adicionarOperacao(pixIn);
 
@@ -29,6 +39,10 @@ public final class Corrente extends Conta implements Pix {
     } else {
       System.out.println("Erro ao realizar o PIX: saldo insuficiente.");
     }
+  }
+
+  public static ArrayList<Integer> getCpfsPix() {
+    return cpfsPix;
   }
 
   // Implementação do método receberPix da interface Pix
@@ -47,8 +61,7 @@ public final class Corrente extends Conta implements Pix {
 
   // Implementação simplificada do método cadastrarCPF
   @Override
-  public void cadastrarCPF() {
-    int cpf = this.getCpfCorrentista();
+  public void cadastrarCPF(int cpf) {
     if (cpfsPix.contains(cpf)) {
       System.out.println("CPF já cadastrado no Pix.");
     } else {
