@@ -71,6 +71,14 @@ public abstract class Conta extends Banco {
     this.numeroConta = numeroConta;
   }
 
+  public ArrayList<Operacao> getOperacoes() {
+    return operacoes;
+  }
+
+  public void setOperacoes(ArrayList<Operacao> operacoes) {
+    this.operacoes = operacoes;
+  }
+
   public void setNomeCorrentista(String nomeCorrentista) {
     this.nomeCorrentista = nomeCorrentista;
   }
