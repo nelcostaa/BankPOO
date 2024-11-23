@@ -5,8 +5,8 @@ public final class Corrente extends Conta implements Pix {
   // Lista para armazenar os CPFs cadastrados no Pix
   private static ArrayList<Integer> cpfsPix = new ArrayList<>();
 
-  public Corrente(String nomeConta, int numeroConta, String nomeCorrentista, int cpfCorrentista) {
-    super(nomeConta, numeroConta, nomeCorrentista, cpfCorrentista);
+  public Corrente(int numeroConta, String nomeCorrentista, int cpfCorrentista) {
+    super(numeroConta, nomeCorrentista, cpfCorrentista);
   }
 
   // Implementação do método fazerPix da interface Pix
